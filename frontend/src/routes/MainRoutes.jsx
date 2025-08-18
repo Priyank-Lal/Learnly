@@ -21,7 +21,12 @@ const MainRoutes = () => {
       <Suspense
         fallback={
           <div className="absolute top-[50%] left-[50%] -translate-[50%]">
-              <span className="text-2xl dark:text-white text-gray-800 md:text-3xl">Loading...</span>
+            <DotLottieReact
+              src="../../public/Loading.lottie"
+              autoplay
+              loop
+              style={{ width: "300px", height: "300px" }}
+            />
           </div>
         }
       >

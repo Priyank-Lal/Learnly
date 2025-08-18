@@ -136,90 +136,90 @@ const Dashboard = () => {
     setIsSubmitting(false);
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        <div className="lg:pl-64 pt-20">
-          <div className="p-6 lg:p-8">
-            <motion.div>
-              {/* Header Skeleton */}
-              <div className="mb-8">
-                <Skeleton className="h-10 w-64 mb-2" />
-                <Skeleton className="h-5 w-96" />
-              </div>
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  //       <div className="lg:pl-64 pt-20">
+  //         <div className="p-6 lg:p-8">
+  //           <motion.div>
+  //             {/* Header Skeleton */}
+  //             <div className="mb-8">
+  //               <Skeleton className="h-10 w-64 mb-2" />
+  //               <Skeleton className="h-5 w-96" />
+  //             </div>
 
-              {/* Stats Grid Skeleton */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {[1, 2, 3].map((index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                  >
-                    <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                      <CardContent className="px-6 py-2">
-                        <div className="flex items-center justify-between">
-                          <div className="space-y-2">
-                            <Skeleton className="h-4 w-20" />
-                            <Skeleton className="h-8 w-16" />
-                          </div>
-                          <Skeleton className="h-12 w-12 rounded-full" />
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
+  //             {/* Stats Grid Skeleton */}
+  //             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  //               {[1, 2, 3].map((index) => (
+  //                 <motion.div
+  //                   key={index}
+  //                   initial={{ opacity: 0, y: 20 }}
+  //                   animate={{ opacity: 1, y: 0 }}
+  //                   transition={{ duration: 0.8, delay: index * 0.1 }}
+  //                 >
+  //                   <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+  //                     <CardContent className="px-6 py-2">
+  //                       <div className="flex items-center justify-between">
+  //                         <div className="space-y-2">
+  //                           <Skeleton className="h-4 w-20" />
+  //                           <Skeleton className="h-8 w-16" />
+  //                         </div>
+  //                         <Skeleton className="h-12 w-12 rounded-full" />
+  //                       </div>
+  //                     </CardContent>
+  //                   </Card>
+  //                 </motion.div>
+  //               ))}
+  //             </div>
 
-              {/* Goals Section Header Skeleton */}
-              <div className="flex items-center justify-between mb-6">
-                <Skeleton className="h-8 w-32" />
-                <Skeleton className="h-10 w-32" />
-              </div>
+  //             {/* Goals Section Header Skeleton */}
+  //             <div className="flex items-center justify-between mb-6">
+  //               <Skeleton className="h-8 w-32" />
+  //               <Skeleton className="h-10 w-32" />
+  //             </div>
 
-              {/* Goals Grid Skeleton */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                  >
-                    <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                      <CardHeader>
-                        <div className="space-y-2">
-                          <Skeleton className="h-6 w-3/4" />
-                          <Skeleton className="h-4 w-full" />
-                          <Skeleton className="h-4 w-2/3" />
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <Skeleton className="h-4 w-16" />
-                              <Skeleton className="h-4 w-12" />
-                            </div>
-                            <Skeleton className="h-2 w-full" />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <Skeleton className="h-4 w-24" />
-                            <Skeleton className="h-4 w-20" />
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //             {/* Goals Grid Skeleton */}
+  //             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  //               {[1, 2, 3, 4, 5, 6].map((index) => (
+  //                 <motion.div
+  //                   key={index}
+  //                   initial={{ opacity: 0, y: 20 }}
+  //                   animate={{ opacity: 1, y: 0 }}
+  //                   transition={{ duration: 0.8, delay: index * 0.1 }}
+  //                 >
+  //                   <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+  //                     <CardHeader>
+  //                       <div className="space-y-2">
+  //                         <Skeleton className="h-6 w-3/4" />
+  //                         <Skeleton className="h-4 w-full" />
+  //                         <Skeleton className="h-4 w-2/3" />
+  //                       </div>
+  //                     </CardHeader>
+  //                     <CardContent>
+  //                       <div className="space-y-4">
+  //                         <div>
+  //                           <div className="flex items-center justify-between mb-2">
+  //                             <Skeleton className="h-4 w-16" />
+  //                             <Skeleton className="h-4 w-12" />
+  //                           </div>
+  //                           <Skeleton className="h-2 w-full" />
+  //                         </div>
+  //                         <div className="flex items-center justify-between">
+  //                           <Skeleton className="h-4 w-24" />
+  //                           <Skeleton className="h-4 w-20" />
+  //                         </div>
+  //                       </div>
+  //                     </CardContent>
+  //                   </Card>
+  //                 </motion.div>
+  //               ))}
+  //             </div>
+  //           </motion.div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
