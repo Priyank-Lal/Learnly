@@ -37,7 +37,7 @@ const registerController = async (req, res) => {
   res.cookie("auth_token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "none", 
+    sameSite: "none",
   });
 
   return res.status(201).json({
@@ -79,8 +79,8 @@ const loginController = async (req, res) => {
 
   res.cookie("auth_token", token, {
     httpOnly: true,
-    secure: true, 
-    sameSite: "none", 
+    secure: true,
+    sameSite: "none",
   });
 
   return res.status(200).json({
@@ -92,12 +92,16 @@ const loginController = async (req, res) => {
 };
 
 const logoutController = (req, res) => {
-  res.clearCookie("auth_token");
+  res.clearCookie("auth_token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
   return res.status(200).json({ message: "Logged out successfully" });
 };
 
 module.exports = {
   registerController,
   loginController,
-  logoutController
+  logoutController,
 };
