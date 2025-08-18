@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoute";
@@ -30,6 +30,7 @@ const MainRoutes = () => {
           </div>
         }
       >
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Routes>
           <Route
             path="/signUp"
