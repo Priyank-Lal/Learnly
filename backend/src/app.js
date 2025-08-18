@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const allowedOrigins = [
-  "https://learnly-drab.vercel.app",
+  "https://learnly-drab.vercel.app/",
   "http://localhost:5173",
 ];
 
@@ -15,12 +15,21 @@ const goalRoutes = require("./routes/goals.routes");
 const userRoutes = require("./routes/user.routes");
 
 const app = express();
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
