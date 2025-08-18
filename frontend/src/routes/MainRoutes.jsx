@@ -30,8 +30,9 @@ const MainRoutes = () => {
           </div>
         }
       >
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
           <Route
             path="/signUp"
             element={
