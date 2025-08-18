@@ -32,59 +32,59 @@ const Goals = () => {
   const activeGoals = goals.filter((goal) => goal.progress < 100).length;
   const completedGoals = goals.filter((goal) => goal.progress >= 100).length;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        <div className="lg:pl-64 pt-20">
-          <div className="p-6 lg:p-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Header Skeleton */}
-              <div className="mb-8">
-                <Skeleton className="h-10 w-48 mb-2" />
-                <Skeleton className="h-5 w-80" />
-              </div>
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  //       <div className="lg:pl-64 pt-20">
+  //         <div className="p-6 lg:p-8">
+  //           <motion.div
+  //             initial={{ opacity: 0, y: 20 }}
+  //             animate={{ opacity: 1, y: 0 }}
+  //             transition={{ duration: 0.8 }}
+  //           >
+  //             {/* Header Skeleton */}
+  //             <div className="mb-8">
+  //               <Skeleton className="h-10 w-48 mb-2" />
+  //               <Skeleton className="h-5 w-80" />
+  //             </div>
 
-              {/* Filter Skeleton */}
-              <div className="mb-6">
-                <Skeleton className="h-10 w-64" />
-              </div>
+  //             {/* Filter Skeleton */}
+  //             <div className="mb-6">
+  //               <Skeleton className="h-10 w-64" />
+  //             </div>
 
-              {/* Goals Skeleton */}
-              <div className="space-y-4">
-                {[1, 2, 3].map((index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                  >
-                    <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                      <CardContent className="p-6">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1 space-y-2">
-                            <Skeleton className="h-6 w-48" />
-                            <Skeleton className="h-4 w-80" />
-                          </div>
-                          <div className="flex items-center space-x-4">
-                            <Skeleton className="h-8 w-20" />
-                            <Skeleton className="h-8 w-24" />
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  //             {/* Goals Skeleton */}
+  //             <div className="space-y-4">
+  //               {[1, 2, 3].map((index) => (
+  //                 <motion.div
+  //                   key={index}
+  //                   initial={{ opacity: 0, y: 20 }}
+  //                   animate={{ opacity: 1, y: 0 }}
+  //                   transition={{ duration: 0.8, delay: index * 0.1 }}
+  //                 >
+  //                   <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+  //                     <CardContent className="p-6">
+  //                       <div className="flex items-center justify-between">
+  //                         <div className="flex-1 space-y-2">
+  //                           <Skeleton className="h-6 w-48" />
+  //                           <Skeleton className="h-4 w-80" />
+  //                         </div>
+  //                         <div className="flex items-center space-x-4">
+  //                           <Skeleton className="h-8 w-20" />
+  //                           <Skeleton className="h-8 w-24" />
+  //                         </div>
+  //                       </div>
+  //                     </CardContent>
+  //                   </Card>
+  //                 </motion.div>
+  //               ))}
+  //             </div>
+  //           </motion.div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
