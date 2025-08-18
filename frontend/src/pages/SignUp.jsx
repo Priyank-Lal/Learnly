@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Brain, Mail, Lock, User, Loader2, Eye, EyeClosed } from "lucide-react";
+import { Brain, Mail, Lock, User, Loader2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,27 +14,40 @@ import {
 } from "@/components/ui/card";
 import { registerAccount } from "../api/api";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { AuthContext } from "../context/AuthContext";
 
 const SignUp = () => {
   const [passwordState, setPasswordState] = useState("password");
   const navigateTo = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
-  const { register, handleSubmit, reset } = useForm();
+  const { setUser } = useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const submitHandler = async (data) => {
     setIsLoading(true);
+    const payload = {
+      username: data.username.trim(),
+      email: data.email.trim(),
+      password: data.password.trim()
+    }
     try {
-      const response = await registerAccount(data);
+      const response = await registerAccount(payload);
       if (response.status === 201) {
+        setUser(response.data.user)
         navigateTo("/dashboard");
         reset();
       } else {
-        console.log(response.data.message);
+        toast.error("An error has occurred");
       }
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
         console.log("An error occurred. Please try again.");
       }
@@ -58,12 +71,12 @@ const SignUp = () => {
             </span>
           </div>
 
-          <Card className="shadow-xl border-0">
+          <Card className="shadow-xl border bg-white dark:bg-white dark:border-gray-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-gray-900">
+              <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-900">
                 Create your account
               </CardTitle>
-              <CardDescription className="text-gray-600">
+              <CardDescription className="text-gray-600 dark:text-gray-600">
                 Start your journey to achieving bigger goals
               </CardDescription>
             </CardHeader>
@@ -73,14 +86,19 @@ const SignUp = () => {
                 className="space-y-6"
               >
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label
+                    htmlFor="name"
+                    className="text-gray-700 dark:text-gray-700"
+                  >
+                    Full Name
+                  </Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <User className="absolute top-[11px] left-3 h-4 w-4 text-gray-400 dark:text-gray-400" />
                     <Input
                       id="name"
                       type="text"
                       placeholder="Enter your full name"
-                      className="pl-10"
+                      className="pl-10 bg-white dark:bg-white border-gray-300 dark:border-gray-300 text-gray-900 dark:text-gray-900"
                       required
                       autoComplete="new-username"
                       {...register("username")}
@@ -89,14 +107,21 @@ const SignUp = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label
+                    htmlFor="email"
+                    className="text-gray-700 dark:text-gray-700"
+                  >
+                    Email
+                  </Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <div className="flex items-center h-fit w-fit">
+                      <Mail className="absolute top-[11px] left-3 h-4 w-4 text-gray-400 dark:text-gray-400" />
+                    </div>
                     <Input
                       id="email"
                       type="email"
                       placeholder="Enter your email"
-                      className="pl-10"
+                      className="pl-10 bg-white dark:bg-white border-gray-300 dark:border-gray-300 text-gray-900 dark:text-gray-900"
                       required
                       autoComplete="new-email"
                       {...register("email")}
@@ -105,45 +130,53 @@ const SignUp = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label
+                    htmlFor="password"
+                    className="text-gray-700 dark:text-gray-700"
+                  >
+                    Password
+                  </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Lock className="absolute top-[11px] left-3 h-4 w-4 text-gray-400 dark:text-gray-400" />
                     <Input
                       id="password"
                       type={passwordState}
                       placeholder="Create a password"
-                      className="pl-10"
+                      className="pl-10 bg-white dark:bg-white border-gray-300 dark:border-gray-300 text-gray-900 dark:text-gray-900"
                       autoComplete="new-password"
                       required
-                      {...register("password")}
+                      {...register("password", {
+                        minLength: {
+                          value: 6,
+                          message:
+                            "Password must be at least 6 characters long",
+                        },
+                      })}
                     />
-                    {passwordState == "password" ? (
-                      <>
-                        <Eye
-                          onClick={() => {
-                            setPasswordState("text");
-                          }}
-                          className="absolute right-3 top-3 h-4 w-4 text-gray-400"
-                        />
-                      </>
+                    {passwordState === "password" ? (
+                      <Eye
+                        onClick={() => setPasswordState("text")}
+                        className="absolute top-[11px] right-3 h-4 w-4 text-gray-400 dark:text-gray-400 cursor-pointer"
+                      />
                     ) : (
-                      <>
-                        <EyeClosed
-                          onClick={() => {
-                            setPasswordState("password");
-                          }}
-                          className="absolute right-3 top-3 h-4 w-4 text-gray-400"
-                        />
-                      </>
+                      <EyeOff
+                        onClick={() => setPasswordState("password")}
+                        className="absolute top-[11px] right-3 h-4 w-4 text-gray-400 dark:text-gray-400 cursor-pointer"
+                      />
                     )}
                   </div>
+                  {errors.password && (
+                    <p className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </p>
+                  )}
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full"
                   size="lg"
                   disabled={isLoading}
+                  className="bg-[#2463eb] hover:bg-[#1d4ed8] text-white dark:text-white cursor-pointer hover:shadow-lg transition-all duration-300 w-full"
                 >
                   {isLoading ? (
                     <>
@@ -157,7 +190,7 @@ const SignUp = () => {
               </form>
 
               <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-600">
                   Already have an account?{" "}
                   <Link
                     to="/login"

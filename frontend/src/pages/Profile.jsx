@@ -26,11 +26,17 @@ import AppSidebar from "../components/layout/AppSidebar";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { getUser, updateUserDetails, updateUserPassword } from "../api/api";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Profile() {
-  const [user, setUser] = useState();
+  const {user} = useContext(AuthContext)
   const { goals } = useContext(goalContext);
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [passwordStates, setPasswordStates] = useState({
@@ -39,14 +45,7 @@ export default function Profile() {
     confirm: "password",
   });
 
-  const fetchUser = async () => {
-    const { data } = await getUser();
-    setUser(data.user);
-  };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   const updatePassword = async (data) => {
     if (
@@ -76,14 +75,14 @@ export default function Profile() {
       toast.success("Password updated successfully");
       reset(); // reset form after success
     } catch (error) {
-     const status = error?.response?.status;
-     const message = error?.response?.data?.message;
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message;
 
-     if (status === 401 && message) {
-       toast.error(message);
-     } else {
-       toast.error("An error occurred while updating password");
-     }
+      if (status === 401 && message) {
+        toast.error(message);
+      } else {
+        toast.error("An error occurred while updating password");
+      }
     } finally {
       setIsLoading2(false);
     }
@@ -189,7 +188,7 @@ export default function Profile() {
                           type="submit"
                           size="lg"
                           disabled={isLoading}
-                          className="bg-[#255cd5] text-white px-6 hover:bg-[#1d4ed8] cursor-pointer hover:shadow-lg transition-all duration-300 w-full dark:bg-blue-600 dark:hover:bg-blue-700"
+                          className="bg-[#255cd5] text-white px-[34.5px] hover:bg-[#1d4ed8] cursor-pointer hover:shadow-lg transition-all duration-300  dark:bg-blue-600 dark:hover:bg-blue-700"
                         >
                           {isLoading ? (
                             <>
@@ -229,7 +228,13 @@ export default function Profile() {
                           id="current-password"
                           type={passwordStates.current}
                           required
-                          {...register("currentPassword")}
+                          {...register("currentPassword", {
+                            minLength: {
+                              value: 6,
+                              message:
+                                "Password must be at least 6 characters long",
+                            },
+                          })}
                           className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white transition-colors duration-200 pr-10"
                         />
                         <button
@@ -244,6 +249,11 @@ export default function Profile() {
                           )}
                         </button>
                       </div>
+                      {errors.currentPassword && (
+                        <p className="text-red-500 text-sm -mt-2">
+                          {errors.currentPassword.message}
+                        </p>
+                      )}
 
                       <div className="space-y-2 relative">
                         <Label
@@ -257,7 +267,13 @@ export default function Profile() {
                           id="new-password"
                           type={passwordStates.new}
                           required
-                          {...register("newPassword")}
+                          {...register("newPassword", {
+                            minLength: {
+                              value: 6,
+                              message:
+                                "Password must be at least 6 characters long",
+                            },
+                          })}
                           className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white transition-colors duration-200 pr-10"
                         />
                         <button
@@ -272,7 +288,11 @@ export default function Profile() {
                           )}
                         </button>
                       </div>
-
+                      {errors.newPassword && (
+                        <p className="text-red-500 text-sm -mt-2">
+                          {errors.newPassword.message}
+                        </p>
+                      )}
                       <div className="space-y-2 relative">
                         <Label
                           htmlFor="confirm-password"
@@ -285,7 +305,13 @@ export default function Profile() {
                           id="confirm-password"
                           type={passwordStates.confirm}
                           required
-                          {...register("confirmPassword")}
+                          {...register("confirmPassword", {
+                            minLength: {
+                              value: 6,
+                              message:
+                                "Password must be at least 6 characters long",
+                            },
+                          })}
                           className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white transition-colors duration-200 pr-10"
                         />
                         <button
@@ -300,12 +326,17 @@ export default function Profile() {
                           )}
                         </button>
                       </div>
+                      {errors.confirmPassword && (
+                        <p className="text-red-500 text-sm -mt-2 mb-0">
+                          {errors.confirmPassword.message}
+                        </p>
+                      )}
 
                       <Button
                         type="submit"
                         size="lg"
                         disabled={isLoading2}
-                        className="bg-[#255cd5] text-white px-6 hover:bg-[#1d4ed8] cursor-pointer hover:shadow-lg transition-all duration-300 dark:bg-blue-600 dark:hover:bg-blue-700"
+                        className="bg-[#255cd5] text-white px-6 hover:bg-[#1d4ed8] cursor-pointer hover:shadow-lg transition-all duration-300 dark:bg-blue-600 dark:hover:bg-blue-700 mt-4"
                       >
                         {isLoading2 ? (
                           <>

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, MemoryRouter } from "react-router-dom";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import {
   ArrowLeft,
@@ -178,10 +178,10 @@ const GoalDetail = () => {
           Goal not found
         </h2>
         <Button
-          onClick={() => navigateTo("/dashboard")}
+          onClick={() => navigateTo(-1)}
           className="transition-colors duration-200"
         >
-          Back to Dashboard
+          Go Back
         </Button>
       </div>
     );
@@ -189,7 +189,6 @@ const GoalDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-
       <div className="lg:pl-64 pt-20">
         <div className="p-6 lg:p-8">
           <motion.div
@@ -199,13 +198,13 @@ const GoalDetail = () => {
           >
             <div className="mb-8">
               {/* <Button variant="ghost" onClick={() => navigateTo("/dashboard")}> */}
-              <Link
-                to={"/dashboard"}
+              <span
+                onClick={() => navigateTo(-1)}
                 className="mb-4 transition-colors duration-200 cursor-pointer flex items-center gap-2 hover:text-blue-600 w-fit dark:hover:text-blue-400"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to Dashboard
-              </Link>
+                Go Back
+              </span>
               {/* </Button> */}
 
               <div className="flex items-start justify-between">
@@ -458,7 +457,6 @@ const GoalDetail = () => {
             </Card>
           </motion.div>
           <div className="w-full flex justify-end mt-6">
-
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
@@ -500,7 +498,6 @@ const GoalDetail = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Settings as SettingsIcon,
@@ -7,6 +7,7 @@ import {
   Sun,
   Palette,
   Shield,
+  Loader2,
 } from "lucide-react";
 import {
   Card,
@@ -35,6 +36,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Settings() {
   // const [darkMode, setDarkMode] = useState(false);
@@ -45,7 +47,7 @@ export default function Settings() {
   const [deletingUser, setDeletingUser] = useState(false);
   const { toggleTheme, isDark } = useTheme();
   const navigateTo = useNavigate();
-
+  const { setUser } = useContext(AuthContext);
   const throwToast = () => {
     toast.message("Just a normal Button");
   };
@@ -53,12 +55,13 @@ export default function Settings() {
   const deleteAccount = async () => {
     try {
       setDeletingUser(true);
-      navigateTo("/login");
-
       await deleteUser();
-      setDeletingUser(false);
+      setUser(null);
+      navigateTo("/login");
     } catch (error) {
-      toast.error("An error occured");
+      toast.error("An error occurred");
+    } finally {
+      setDeletingUser(false);
     }
   };
 

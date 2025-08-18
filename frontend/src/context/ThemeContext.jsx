@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
 
 const ThemeContext = createContext();
 
@@ -16,14 +17,11 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     // Check for saved theme preference or default to light mode
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setIsDark(savedTheme === "dark" || (!savedTheme && prefersDark));
+    if (!savedTheme) {setIsDark(false);}
+    setIsDark(savedTheme === "dark");
   }, []);
 
   useEffect(() => {
-    // Apply theme to document
     if (isDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");

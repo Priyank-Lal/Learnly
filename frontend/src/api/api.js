@@ -7,6 +7,7 @@ const api = axios.create({
 
 export const registerAccount = (details) => api.post("/auth/register", details);
 export const loginAccount = (details) => api.post("/auth/login", details);
+export const logOutUser = () => api.post("/auth/logout");
 export const getUser = () => api.get("/user/get-user");
 export const createGoal = (goal) => api.post("/goals/create-goal", goal);
 export const fetchGoals = () => api.get("/goals/get-goals");

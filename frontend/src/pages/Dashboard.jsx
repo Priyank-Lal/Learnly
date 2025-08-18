@@ -49,6 +49,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const Dashboard = () => {
   const { goals, isLoading, loadGoals } = useContext(goalContext);
@@ -286,10 +287,10 @@ const Dashboard = () => {
                     </Button>
                   </motion.div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 ">
                   <form
                     onSubmit={handleSubmit(submitHandler)}
-                    className="space-y-6 mt-4"
+                    className="space-y-6 mt-3"
                   >
                     <DialogHeader>
                       <DialogTitle className="flex items-center text-2xl font-bold text-gray-900 dark:text-white">
@@ -386,7 +387,7 @@ const Dashboard = () => {
                           <Button
                             type="button"
                             variant="outline"
-                            className="border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            className="border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
                             disabled={isSubmitting}
                           >
                             Cancel
@@ -401,6 +402,7 @@ const Dashboard = () => {
                         </Button>
                       </div>
                     </DialogFooter>
+
                   </form>
                 </DialogContent>
               </Dialog>
