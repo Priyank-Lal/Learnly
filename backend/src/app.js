@@ -8,8 +8,6 @@ const allowedOrigins = [
   "http://localhost:5173",
 ];
 
-
-
 const authRoutes = require("./routes/auth.routes");
 const goalRoutes = require("./routes/goals.routes");
 const userRoutes = require("./routes/user.routes");
@@ -29,7 +27,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+// app.options("*", cors({ origin: allowedOrigins, credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
