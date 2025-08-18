@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const allowedOrigins = [
-  "https://learnly-drab.vercel.app/",
+  "https://learnly-drab.vercel.app",
   "http://localhost:5173",
 ];
 
