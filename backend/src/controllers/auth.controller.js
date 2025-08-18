@@ -34,7 +34,11 @@ const registerController = async (req, res) => {
     process.env.JWT_SECRET_KEY
   );
 
-  res.cookie("auth_token", token);
+  res.cookie("auth_token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none", 
+  });
 
   return res.status(201).json({
     message: "User created successfully",
@@ -73,7 +77,11 @@ const loginController = async (req, res) => {
     process.env.JWT_SECRET_KEY
   );
 
-  res.cookie("auth_token", token);
+  res.cookie("auth_token", token, {
+    httpOnly: true,
+    secure: true, 
+    sameSite: "none", 
+  });
 
   return res.status(200).json({
     message: "Logged In Successfully",
