@@ -226,7 +226,7 @@ const Dashboard = () => {
       {isSubmitting && (
         <div className="fixed inset-0 bg-gray-900/50 brightness-110 dark:brightness-100 bg-opacity-40 flex items-center justify-center z-99">
           <DotLottieReact
-            src="../../public/AiSearching.lottie"
+            src="../../public/AIloading.lottie"
             autoplay
             loop
             className="w-80 h-80 "
