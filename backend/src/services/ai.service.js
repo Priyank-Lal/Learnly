@@ -19,6 +19,7 @@ Rules:
 4. No dates in the response.
 5. Each step should start with an action verb.
 6. Distribute difficulty evenly over time.
+7. Directly start with listing the micro-goals without including anything else
   `,
     config: {
       systemInstruction: `
