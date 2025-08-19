@@ -5,10 +5,6 @@ import AppSidebar from "./components/layout/AppSidebar";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import ScrollToTop from "./components/layout/ScrollToTop";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Loader from "./components/layout/Loader";
-import Icon from "./Icon";
-
 const App = () => {
   const { user, loading } = useContext(AuthContext);
   if (loading) return;
@@ -26,9 +22,7 @@ const App = () => {
         ) : (
           <MainRoutes />
         )}
-        <div className="absolute top-0 left-0">
-          <Icon/>
-        </div>
+      
       </div>
     </>
   );
