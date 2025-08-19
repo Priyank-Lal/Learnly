@@ -368,6 +368,7 @@ const Dashboard = () => {
                             onSelect={setSelectedDate}
                             disabled={(date) => date < new Date()}
                             className="bg-white dark:bg-blue-300"
+                            required
                           />
                         </PopoverContent>
                       </Popover>
