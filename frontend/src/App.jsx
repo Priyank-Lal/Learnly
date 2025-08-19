@@ -7,25 +7,30 @@ import { AuthContext } from "./context/AuthContext";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Loader from "./components/layout/Loader";
+import Icon from "./Icon";
 
 const App = () => {
   const { user, loading } = useContext(AuthContext);
-
   if (loading) return;
 
   return (
-    <div className="overflow-hidden bg-gray-100 dark:bg-gray-900 min-h-screen">
-      {user ? (
-        <ThemeProvider>
-          <ScrollToTop />
-          <Navbar />
-          <AppSidebar />
+    <>
+      <div className="overflow-hidden bg-gray-100 dark:bg-gray-900 min-h-screen">
+        {user ? (
+          <ThemeProvider>
+            <ScrollToTop />
+            <Navbar />
+            <AppSidebar />
+            <MainRoutes />
+          </ThemeProvider>
+        ) : (
           <MainRoutes />
-        </ThemeProvider>
-      ) : (
-        <MainRoutes />
-      )}
-    </div>
+        )}
+        <div className="absolute top-0 left-0">
+          <Icon/>
+        </div>
+      </div>
+    </>
   );
 };
 
