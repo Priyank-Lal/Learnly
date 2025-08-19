@@ -47,6 +47,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import NumberFlow from "@number-flow/react";
+import AiLoader from "../components/layout/AiLoader";
 
 const Dashboard = () => {
   const { goals, isLoading, loadGoals } = useContext(goalContext);
@@ -224,14 +225,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {!isSubmitting && (
-        <div className="fixed inset-0 bg-gray-900/50 brightness-110 dark:brightness-100 bg-opacity-40 flex items-center justify-center z-99">
-          <DotLottieReact
-            src="../../public/AiSearching.lottie"
-            autoplay
-            loop
-            className="w-80 h-80 "
-          />
-        </div>
+        <AiLoader/>
       )}
       <div className="lg:pl-64 pt-20">
         <div className="absolute top-[50%] left-[50%] -translate-[50%]"></div>
