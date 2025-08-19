@@ -20,7 +20,8 @@ Rules:
 5. Each step should start with an action verb.
 6. Distribute difficulty evenly over time.
 7. Directly start with listing the micro-goals without including anything else
-8. The maximum number of micro-goals should not be more that 25
+8. The minimum micro-goals should be 5 and maximum should be 25
+
   `,
     config: {
       systemInstruction: `
