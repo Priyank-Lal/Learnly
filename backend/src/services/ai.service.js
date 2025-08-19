@@ -2,13 +2,14 @@ const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({});
 
-const generateTask = async (goal, days, dueDate) => {
+const generateTask = async (goal, days, dueDate,desc) => {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents: `
     Goal: ${goal}
     Complete Goal By: ${dueDate}
     Target completion date: ${days}
+    Description for help: ${desc}
        
 Create a sequence of micro-goals to achieve the target in the given time.
 Rules:

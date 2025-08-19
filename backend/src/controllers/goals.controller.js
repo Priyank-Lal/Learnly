@@ -12,7 +12,7 @@ const createGoal = async (req, res) => {
   }
 
   try {
-    const response = await generateTask(title, days, dueDate);
+    const response = await generateTask(title, days, dueDate,description);
     const subTasks = response
       .split(/\d+\.\s+/) // numbers ke hisaab se split
       .filter(Boolean) // empty strings hatao
