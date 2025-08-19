@@ -1,9 +1,9 @@
-import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import PublicRoute from "./PublicRoute";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Loader from "../components/layout/Loader";
 
 const SignUp = lazy(() => import("../pages/SignUp"));
 const Login = lazy(() => import("../pages/Login"));
@@ -20,14 +20,7 @@ const MainRoutes = () => {
     <>
       <Suspense
         fallback={
-          <div className="absolute top-[50%] left-[50%] -translate-[50%]">
-            <DotLottieReact
-              src="../../public/Loading.lottie"
-              autoplay
-              loop
-              style={{ width: "300px", height: "300px" }}
-            />
-          </div>
+          <Loader/>
         }
       >
         <Routes>

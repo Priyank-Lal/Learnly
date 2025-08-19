@@ -5,14 +5,16 @@ import AppSidebar from "./components/layout/AppSidebar";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import ScrollToTop from "./components/layout/ScrollToTop";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Loader from "./components/layout/Loader";
 
 const App = () => {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return;
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-gray-100 dark:bg-gray-900 min-h-screen">
       {user ? (
         <ThemeProvider>
           <ScrollToTop />

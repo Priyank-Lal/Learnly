@@ -1,21 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, LogOut, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { goalContext } from "../../context/GoalContext";
-import { getUser, logOutUser } from "../../api/api";
+import { logOutUser } from "../../api/api";
 import { memo } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(AuthContext);
-  // const fetchUser = async () => {
-  //   const { data } = await getUser();
-  //   setUser(data.user);
-  // };
+
   const isAuthenticated = true;
 
   const handleLogout = async () => {
@@ -23,10 +18,6 @@ const Navbar = () => {
     setUser(null);
     navigate("/login");
   };
-
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
 
   return (
     <nav className="fixed top-0 right-0 left-0 lg:left-64 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-40 transition-all duration-300">
@@ -48,7 +39,6 @@ const Navbar = () => {
             </div>
           </motion.div>
 
-          {/* User Actions */}
           {isAuthenticated ? (
             <motion.div
               initial={{ opacity: 0, x: 20 }}

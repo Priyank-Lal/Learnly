@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -9,14 +9,12 @@ import {
   Brain,
   Plus,
   Menu,
-  X,
   Sun,
   Moon,
 } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Menu items with proper routing
 const menuItems = [
   {
     title: "Dashboard",
@@ -89,7 +87,6 @@ const AppSidebar = () => {
         {!isDesktop && isMobileOpen && (
           <>
             <>
-              {/* Mobile Menu Overlay */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -99,7 +96,6 @@ const AppSidebar = () => {
                 onClick={toggleMobileMenu}
               />
 
-              {/* Mobile Sidebar */}
               <motion.div
                 initial={{ x: -500 }}
                 animate={{ x: 0 }}
@@ -108,7 +104,6 @@ const AppSidebar = () => {
                 className="fixed left-0 top-0 h-full w-64 bg-white dark:bg-gray-900 z-50 lg:hidden shadow-2xl"
               >
                 <div className="flex flex-col h-full">
-                  {/* Mobile Header */}
                   <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center space-x-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 dark:bg-blue-500">
@@ -178,7 +173,6 @@ const AppSidebar = () => {
                         </div>
                       </div>
 
-                      {/* Quick Actions */}
                       <div className="mb-6">
                         <div className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                           Quick Actions
@@ -195,7 +189,6 @@ const AppSidebar = () => {
                     </div>
                   </div>
 
-                  {/* Mobile Footer */}
                   <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
                       <div className="flex items-center space-x-3">
@@ -222,7 +215,6 @@ const AppSidebar = () => {
       {isDesktop && (
         <>
           <div className="fixed left-0 top-0 h-full w-64 border-r border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60 z-30 transition-colors duration-300">
-            {/* Header */}
             <div className="border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between px-4 py-3">
                 <div className="flex items-center space-x-3">
@@ -251,7 +243,6 @@ const AppSidebar = () => {
               </div>
             </div>
 
-            {/* Content */}
             <div className="px-3 py-4">
               <div className="mb-6">
                 <div className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
@@ -284,7 +275,6 @@ const AppSidebar = () => {
                 </div>
               </div>
 
-              {/* Quick Actions Section */}
               <div className="mb-6">
                 <div className="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                   Quick Actions
@@ -299,7 +289,6 @@ const AppSidebar = () => {
               </div>
             </div>
 
-            {/* Footer */}
             <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 dark:border-gray-700 py-4 px-3">
               <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
                 <div className="flex items-center space-x-3">

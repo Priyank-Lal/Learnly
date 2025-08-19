@@ -1,14 +1,17 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useParams, useNavigate, Link, MemoryRouter } from "react-router-dom";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  delay,
+} from "framer-motion";
 import {
   ArrowLeft,
   Calendar,
   Plus,
-  Sparkles,
-  CheckCircle2,
   Circle,
-  Edit2,
   Trash2,
   Target,
   Loader2,
@@ -22,16 +25,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import Navbar from "../components/layout/Navbar";
 import {
   createSubtask,
   deleteGoal,
   deleteSubTask,
-  fetchSingleGoal,
-  updateGoal,
   updateSubTask,
 } from "../api/api";
 import {
@@ -47,15 +46,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { goalContext } from "../context/GoalContext";
-import AppSidebar from "../components/layout/AppSidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Loader from "../components/layout/Loader";
+import NumberFlow from "@number-flow/react";
 
 const GoalDetail = () => {
   const { id } = useParams();
@@ -89,7 +87,8 @@ const GoalDetail = () => {
 
     animate(progressMotionValue, progressNumber, {
       duration: 0.8,
-      ease: "easeOut",
+      ease: "easeInOut",
+      delay: 0.4,
     });
 
     if (progressNumber == 100) {
@@ -159,16 +158,17 @@ const GoalDetail = () => {
     }
 
     try {
-      // setLoadingDeleteSubTask(subTaskID);
+      setLoadingDeleteSubTask(subTaskID);
       await deleteSubTask(goalID, subTaskID);
       await loadGoals();
-      // setLoadingDeleteSubTask(null);
       toast.success("Subtask Deleted Successfully");
     } catch (error) {
       console.log(error);
 
       return toast.error("An error occured");
     }
+
+    setLoadingDeleteSubTask(null);
   };
 
   if (!goal) {
@@ -189,7 +189,12 @@ const GoalDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="lg:pl-64 pt-20">
+      {loadingDelete && (
+        <div className="fixed inset-0 bg-black/50 bg-opacity-40 flex items-center justify-center z-99">
+          <Loader />
+        </div>
+      )}
+      <div className="lg:pl-64 pt-16">
         <div className="p-6 lg:p-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -200,7 +205,7 @@ const GoalDetail = () => {
               {/* <Button variant="ghost" onClick={() => navigateTo("/dashboard")}> */}
               <span
                 onClick={() => navigateTo(-1)}
-                className="mb-4 transition-colors duration-200 cursor-pointer flex items-center gap-2 hover:text-blue-600 w-fit dark:hover:text-blue-400"
+                className="mb-4 transition-colors duration-200 cursor-pointer flex items-center gap-2 hover:text-blue-600 w-fit dark:hover:text-blue-400 text-md "
               >
                 <ArrowLeft className="h-4 w-4" />
                 Go Back
@@ -208,7 +213,6 @@ const GoalDetail = () => {
               {/* </Button> */}
 
               <div className="flex items-start justify-between">
-                {/* Title + Description */}
                 <div className="flex-1">
                   <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-200 line-clamp-2">
                     {goal?.title}
@@ -220,7 +224,12 @@ const GoalDetail = () => {
                   <div className="flex items-center w-100 space-x-6 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center">
                       <Calendar className="mr-2 h-4 w-4" />
-                      Due: {new Date(goal?.dueDate).toLocaleDateString()}
+                      Due:{" "}
+                      {new Date(goal.dueDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
                     </div>
                     <div className="flex items-center">
                       <Target className="mr-2 h-4 w-4" />
@@ -228,8 +237,6 @@ const GoalDetail = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Delete Button */}
               </div>
             </div>
 
@@ -247,7 +254,7 @@ const GoalDetail = () => {
                         Overall Progress
                       </span>
                       <span className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {goal?.progress}%
+                        <NumberFlow value={goal?.progress} />%
                       </span>
                     </div>
                     <div className="relative h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -261,7 +268,7 @@ const GoalDetail = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
                     <div className="text-center">
                       <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                        {goal?.subTasks?.length}
+                        <NumberFlow value={goal?.subTasks?.length} />
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         Total Tasks
@@ -269,7 +276,7 @@ const GoalDetail = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                        {completedSubtasks}
+                        <NumberFlow value={completedSubtasks} />
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         Completed
@@ -277,7 +284,11 @@ const GoalDetail = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                        {(goal?.subTasks?.length ?? 0) - completedSubtasks}
+                        <NumberFlow
+                          value={
+                            (goal?.subTasks?.length ?? 0) - completedSubtasks
+                          }
+                        />
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         Remaining
@@ -397,6 +408,7 @@ const GoalDetail = () => {
                           onCheckedChange={() =>
                             toggleSubtask(goal?._id, subtask._id)
                           }
+                          disabled={loadingDeleteSubTask === subtask._id}
                           className="data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-400 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-400 data-[state=checked]:text-white cursor-pointer"
                         />
                       )}
@@ -416,13 +428,22 @@ const GoalDetail = () => {
                               <MoreHorizontal className="w-5 h-5 cursor-pointer" />
                               <DropdownMenuContent className="">
                                 <DropdownMenuItem
-                                  onClick={() => {
-                                    handleDeleteSubTask(goal?._id, subtask._id);
-                                  }}
+                                  onClick={() =>
+                                    handleDeleteSubTask(goal?._id, subtask._id)
+                                  }
                                   className="text-red-600 hover:!text-red-600 cursor-pointer dark:text-red-400 dark:hover:!text-red-400"
                                 >
-                                  Delete Subtask
-                                  <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400  " />
+                                  {loadingDeleteSubTask === subtask._id ? (
+                                    <>
+                                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                      Deleting...
+                                    </>
+                                  ) : (
+                                    <>
+                                      Delete Subtask
+                                      <Trash2 className="w-4 h-4 text-red-600 dark:text-red-400 ml-1" />
+                                    </>
+                                  )}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenuTrigger>

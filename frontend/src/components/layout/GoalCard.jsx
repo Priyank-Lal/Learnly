@@ -1,6 +1,4 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, Calendar, Target } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -56,7 +54,12 @@ const GoalCard = ({ goal, index }) => {
                   {goal.progress}%
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Due {new Date(goal.dueDate).toLocaleDateString()}
+                  Due:
+                  {new Date(goal.dueDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
                 </p>
               </div>
             </div>

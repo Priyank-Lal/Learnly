@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3,
   TrendingUp,
   Calendar,
   Target,
-  Clock,
   CheckCircle2,
 } from "lucide-react";
 import {
@@ -15,10 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-// import { Sidebar } from "@/components/layout/Sidebar";
-import Navbar from "../components/layout/Navbar";
-// import { useGoals } from "@/context/GoalsContext";
 import {
   ResponsiveContainer,
   BarChart,
@@ -27,18 +22,12 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
-  Area,
-  AreaChart,
   Legend,
 } from "recharts";
-import { goalContext } from "../context/GoalContext";
-import AppSidebar from "../components/layout/AppSidebar";
-import { Link } from "react-router-dom";
+import { goalContext } from "../context/GoalContext";;
 import GoalCard from "../components/layout/GoalCard";
 
 const CATEGORY_COLORS = [
@@ -55,7 +44,6 @@ const CATEGORY_COLORS = [
 ];
 
 export default function Analytics() {
-  // const { goals } = useGoals();
   const { goals } = useContext(goalContext);
 
   const categoryCounts = goals.reduce((acc, goal) => {
@@ -140,15 +128,6 @@ export default function Analytics() {
     },
   ];
 
-  // Prepare data for Goal Sub-Tasks Completed Bar Chart
-  const goalSubtaskBarData = goals.map((goal) => ({
-    name: goal.title,
-    completedSubtasks: goal.subTasks
-      ? goal.subTasks.filter((st) => st.done).length
-      : 0,
-  }));
-
-  // Prepare data for Active Goal Sub-Tasks Completed Bar Chart
   const activeGoalSubtaskBarData = goals
     .filter((goal) => goal.progress < 100)
     .map((goal, idx) => ({
@@ -322,7 +301,6 @@ export default function Analytics() {
               </Card>
             </div>
 
-            {/* Goal Sub-Tasks Completed Bar Chart */}
             <Card className="mb-8 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="text-gray-900 dark:text-white">
@@ -380,7 +358,6 @@ export default function Analytics() {
               </CardContent>
             </Card>
 
-            {/* Goal Breakdown */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

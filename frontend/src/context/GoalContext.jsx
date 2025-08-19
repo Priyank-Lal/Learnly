@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { fetchGoals } from "../api/api";
-import { updateGoal } from "../api/api"; 
+import { updateGoal } from "../api/api";
 
 export const goalContext = createContext(null);
 
@@ -17,14 +17,16 @@ const GoalContext = ({ children }) => {
 
   const updateGoalAndRefresh = async (goalId, updateData) => {
     await updateGoal(goalId, updateData);
-    await loadGoals(); 
+    await loadGoals();
   };
 
   useEffect(() => {
     loadGoals();
   }, []);
   return (
-    <goalContext.Provider value={{ loadGoals, goals, isLoading, updateGoalAndRefresh }}>
+    <goalContext.Provider
+      value={{ loadGoals, goals, isLoading, updateGoalAndRefresh }}
+    >
       {children}
     </goalContext.Provider>
   );

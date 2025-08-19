@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Plus,
@@ -17,13 +17,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import AppSidebar from "../components/layout/AppSidebar";
 import { useForm } from "react-hook-form";
-import { X, FileText, Sparkles } from "lucide-react";
+import { FileText } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogClose,
@@ -34,12 +32,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { createGoal, fetchGoals } from "../api/api";
-import Navbar from "../components/layout/Navbar";
+import { createGoal } from "../api/api";
 import { goalContext } from "../context/GoalContext";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar1 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -50,6 +46,7 @@ import {
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import NumberFlow from "@number-flow/react";
 
 const Dashboard = () => {
   const { goals, isLoading, loadGoals } = useContext(goalContext);
@@ -57,6 +54,7 @@ const Dashboard = () => {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     loadGoals();
@@ -109,7 +107,7 @@ const Dashboard = () => {
     },
     {
       title: "Average Progress",
-      value: `${Math.round(totalProgress)}%`,
+      value: Number(`${Math.round(totalProgress)}`),
       icon: TrendingUp,
       color: "text-purple-600",
       bgColor: "bg-purple-50",
@@ -130,8 +128,10 @@ const Dashboard = () => {
       reset();
       setSelectedDate(null);
       toast.success("Goal created!");
+      setOpen(false);
     } catch (err) {
       toast.error("Failed to create goal");
+      setOpen(false);
     }
     setIsSubmitting(false);
   };
@@ -223,7 +223,18 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {isSubmitting && (
+        <div className="fixed inset-0 bg-gray-900/50 brightness-110 dark:brightness-100 bg-opacity-40 flex items-center justify-center z-99">
+          <DotLottieReact
+            src="../../public/AiSearching.lottie"
+            autoplay
+            loop
+            className="w-80 h-80 "
+          />
+        </div>
+      )}
       <div className="lg:pl-64 pt-20">
+        <div className="absolute top-[50%] left-[50%] -translate-[50%]"></div>
         <div className="p-6 lg:p-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -255,7 +266,8 @@ const Dashboard = () => {
                             {stat.title}
                           </p>
                           <p className="text-3xl md:text-3xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
-                            {stat.value}
+                            <NumberFlow trend={0} value={stat.value} />
+                            {stat.title === "Average Progress" ? "%" : ""}
                           </p>
                         </div>
                         <div
@@ -274,7 +286,7 @@ const Dashboard = () => {
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white transition-colors duration-200">
                 Your Goals
               </h2>
-              <Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -402,13 +414,11 @@ const Dashboard = () => {
                         </Button>
                       </div>
                     </DialogFooter>
-
                   </form>
                 </DialogContent>
               </Dialog>
             </div>
 
-            {/* Goals Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {displayGoals.map((goal, index) => (
                 <motion.div
@@ -451,7 +461,15 @@ const Dashboard = () => {
                           <div className="flex items-center justify-between text-sm">
                             <div className="flex items-center text-gray-500 dark:text-gray-400">
                               <Calendar1 className="h-4 w-4 mr-1" />
-                              Due: {new Date(goal.dueDate).toLocaleDateString()}
+                              Due:{" "}
+                              {new Date(goal.dueDate).toLocaleDateString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                }
+                              )}
                             </div>
                             <div className="flex items-center space-x-2">
                               <span className="text-xs text-gray-500 dark:text-gray-400">

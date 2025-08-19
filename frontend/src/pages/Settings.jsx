@@ -1,10 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Settings as SettingsIcon,
   Bell,
-  Moon,
-  Sun,
   Palette,
   Shield,
   Loader2,
@@ -19,8 +16,6 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import AppSidebar from "../components/layout/AppSidebar";
-import Navbar from "../components/layout/Navbar";
 import { useTheme } from "../context/ThemeContext";
 import { toast } from "sonner";
 import { deleteUser } from "../api/api";
@@ -318,15 +313,6 @@ export default function Settings() {
                 </CardContent>
               </Card>
 
-              {/* Save Changes */}
-              {/* <div className="flex justify-end">
-                <Button
-                  size="lg"
-                  className="bg-[#2463eb] hover:bg-[#1d4ed8] dark:bg-blue-600 dark:hover:bg-blue-700 transition-all duration-300"
-                >
-                  Save Changes
-                </Button>
-              </div> */}
             </div>
           </motion.div>
         </div>

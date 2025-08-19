@@ -1,15 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  User,
-  Mail,
-  Calendar,
-  Target,
-  TrendingUp,
-  Loader2,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { User, Loader2, Eye, EyeOff } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,17 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { goalContext } from "../context/GoalContext";
-import Navbar from "../components/layout/Navbar";
-import AppSidebar from "../components/layout/AppSidebar";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { getUser, updateUserDetails, updateUserPassword } from "../api/api";
+import { updateUserDetails, updateUserPassword } from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Profile() {
-  const {user} = useContext(AuthContext)
-  const { goals } = useContext(goalContext);
+  const { user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -44,8 +31,6 @@ export default function Profile() {
     new: "password",
     confirm: "password",
   });
-
-
 
   const updatePassword = async (data) => {
     if (
@@ -73,7 +58,7 @@ export default function Profile() {
       setIsLoading2(true);
       await updateUserPassword(payload);
       toast.success("Password updated successfully");
-      reset(); // reset form after success
+      reset(); 
     } catch (error) {
       const status = error?.response?.status;
       const message = error?.response?.data?.message;
