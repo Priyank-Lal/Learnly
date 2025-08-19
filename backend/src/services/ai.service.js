@@ -13,11 +13,12 @@ const generateTask = async (goal, days, dueDate,desc) => {
        
 Create a sequence of micro-goals to achieve the target in the given time.
 Rules:
-1. Keep output under 100 words.
-2. Use only a numbered list.
-3. No dates in the response.
-4. Each step should start with an action verb.
-5. Distribute difficulty evenly over time.
+1. Keep output under 150-200 words.
+2. In some cases you may increase the word limit according to the Goals and Description
+3. Use only a numbered list.
+4. No dates in the response.
+5. Each step should start with an action verb.
+6. Distribute difficulty evenly over time.
   `,
     config: {
       systemInstruction: `
